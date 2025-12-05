@@ -362,7 +362,7 @@ async function loadMeta(){
   for(const a of uni){
     const sym = a.name;
     const sz = Number(a.szDecimals||0);
-    const px = Math.max(0, 6 - sz); // PURE PERP RULE
+    const px = Math.max(0, 5 - sz); // PURE PERP RULE
 
     assetMeta[sym] = {
       pxDecimals: px,
@@ -545,3 +545,4 @@ await fetchBalance();
 
 </body>
 </html>
+
