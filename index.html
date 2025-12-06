@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>HL Trade Prep — Perp Accurate</title>
+<title>HL Trade Prep — Mobile Optimized</title>
 
 <style>
 :root{
@@ -17,9 +17,7 @@
 }
 *{box-sizing:border-box}
 body{
-  margin:0;min-height:100vh;
-  font-family:Inter,system-ui,Arial;
-  color:#e6eef8;
+  margin:0;min-height:100vh;font-family:Inter,system-ui,Arial;color:#e6eef8;
   background:linear-gradient(180deg,#071029 0%, #07151f 55%, #081226 100%);
   display:flex;justify-content:center;padding:28px;
 }
@@ -35,7 +33,19 @@ body{
 h1{margin:0;font-size:20px}
 .sub{color:var(--muted);font-size:13px}
 
-.grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
+/* Desktop grid */
+.grid{
+  display:grid;
+  grid-template-columns:1fr 360px;
+  gap:18px;
+}
+
+/* MOBILE: Position size under rules */
+@media (max-width: 900px) {
+  .grid{ grid-template-columns:1fr; }
+  .rules-card{ order: 2 }
+  .pos-section-card{ order: 3; margin-top:14px !important; }
+}
 
 .card{
   background:var(--card);
@@ -44,20 +54,26 @@ h1{margin:0;font-size:20px}
   border:1px solid rgba(255,255,255,0.03);
   box-shadow:0 8px 30px rgba(2,6,23,0.6);
 }
+.title{
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:8px;
+  text-transform:uppercase;
+}
 
-.title{color:var(--muted);font-size:13px;margin-bottom:8px;text-transform:uppercase}
-
-.balance-box{text-align:center;background:rgba(255,255,255,0.03);padding:12px;border-radius:10px}
+.balance-box{
+  text-align:center;
+  background:rgba(255,255,255,0.03);
+  padding:12px;
+  border-radius:10px;
+}
 .bal-amount{font-size:22px;font-weight:700;margin-top:6px}
 
 .row{display:flex;gap:10px;align-items:center}
-
 .btn{
   background:linear-gradient(90deg,var(--accent2),var(--accent1));
-  border:0;border-radius:10px;
-  padding:10px 14px;
-  color:#052735;font-weight:700;
-  cursor:pointer;
+  border:0;border-radius:10px;padding:10px 14px;
+  color:#052735;font-weight:700;cursor:pointer;
   box-shadow:0 6px 18px rgba(96,165,250,0.12);
 }
 
@@ -69,6 +85,7 @@ input[type="text"]{
   background:transparent;color:inherit;font-size:15px;margin-top:6px;
 }
 
+/* Drop-down */
 .sel-wrap{position:relative}
 .sel-input{
   width:100%;padding:9px;border-radius:10px;
@@ -93,7 +110,6 @@ input[type="text"]{
   background:rgba(255,255,255,0.02);
   padding:10px;border-radius:10px;
   border:1px solid rgba(255,255,255,0.02);
-  cursor:pointer;
 }
 .rule input{width:18px;height:18px}
 
@@ -103,8 +119,7 @@ input[type="text"]{
 
 .prop-box{
   background:rgba(255,255,255,0.02);
-  padding:10px;border-radius:10px;
-  margin-top:10px;
+  padding:10px;border-radius:10px;margin-top:10px;
 }
 
 .hidden{display:none}
@@ -119,7 +134,7 @@ input[type="text"]{
     <div class="logo">HL</div>
     <div>
       <h1>Trade Prep</h1>
-      <div class="sub">Perp-accurate decimals from META endpoint</div>
+      <div class="sub">Perp-accurate decimals from meta</div>
     </div>
   </div>
 
@@ -132,6 +147,7 @@ input[type="text"]{
       <div class="card">
         <div class="title">Account</div>
         <div style="display:flex;gap:12px;align-items:center">
+
           <div class="balance-box" style="flex:0 0 220px">
             <div class="small-muted">Usable balance</div>
             <div class="bal-amount">$<span id="totalBal">—</span></div>
@@ -139,11 +155,12 @@ input[type="text"]{
 
           <div style="flex:1">
             <div class="row">
-              <button id="refreshBtn" class="btn">Refresh Balance</button>
-              <button id="clearBtn" class="btn" style="background:linear-gradient(90deg,#ff9c9c,#ffc27a)">Clear All</button>
+              <button id="refreshBtn" class="btn">Refresh</button>
+              <button id="clearBtn" class="btn" style="background:linear-gradient(90deg,#ff9c9c,#ffc27a)">Clear</button>
             </div>
-            <div class="small-muted">Balance = equity - unrealized pnl from crypto + stocks</div>
+            <div class="small-muted">Balance = equity - upnl (crypto + stocks)</div>
           </div>
+
         </div>
       </div>
 
@@ -164,14 +181,14 @@ input[type="text"]{
       </div>
 
       <!-- RULES -->
-      <div class="card" style="margin-top:14px">
+      <div class="card rules-card" style="margin-top:14px">
         <div class="title">Rules</div>
 
         <div class="rules">
           <label class="rule"><input type="checkbox" class="rule-box"> Inside 4H area</label>
           <label class="rule"><input type="checkbox" class="rule-box"> Clear 15m MSB</label>
-          <label class="rule"><input type="checkbox" class="rule-box"> No open trade that has stoploss not in stoploss</label>
-          <label class="rule"><input type="checkbox" class="rule-box"> 30+ minutes since I last got stopped out</label>
+          <label class="rule"><input type="checkbox" class="rule-box"> No open trade with invalid stoploss</label>
+          <label class="rule"><input type="checkbox" class="rule-box"> 30+ minutes since last stopout</label>
           <label class="rule"><input type="checkbox" class="rule-box"> Not trying to make it back</label>
           <label class="rule"><input type="checkbox" class="rule-box"> Journal filled BEFORE trade</label>
         </div>
@@ -179,10 +196,10 @@ input[type="text"]{
 
     </div>
 
-    <!-- RIGHT -->
+    <!-- RIGHT: POSITION SIZE -->
     <div>
 
-      <div class="card pos-section">
+      <div class="card pos-section pos-section-card">
         <div class="pos-title">Position Sizes</div>
 
         <div id="posBlock" class="hidden">
@@ -192,7 +209,7 @@ input[type="text"]{
           </div>
 
           <div class="prop-box">
-            <div class="small-muted">25K Evaluation</div>
+            <div class="small-muted">25K Eval</div>
             <div class="pos-value" id="propEval">—</div>
           </div>
 
@@ -203,13 +220,11 @@ input[type="text"]{
         </div>
 
         <div id="posLocked" class="small-muted">
-          Size shows when: asset selected, entry+stop set, all rules checked.
+          Requires: asset, entry, stop, all rules checked.
         </div>
 
         <div id="posError" style="margin-top:8px;color:#ff9f9f;font-size:13px"></div>
-
       </div>
-
 
       <!-- META DEBUG -->
       <div class="card" style="margin-top:14px">
@@ -223,21 +238,24 @@ input[type="text"]{
   </div>
 </div>
 
+
+
+
 <script>
 (async ()=>{
 
-// -----------------------------------------
-// CONFIG
-// -----------------------------------------
+// ---------------- CONFIG ----------------
 const USER = "0xf692cd649ea29a6c2dedc8af5487af97c0dfe102";
+
 const RISK_PCT = 0.5/100;
 const PROP_EVAL_RISK = 250;
 const PROP_PASSED_RISK = 125;
 
-let selectedSymbol = null;
 let assets = [];
-let assetMeta = {}; // symbol -> { pxDecimals, szDecimals }
+let assetMeta = {};
+let selectedSymbol = null;
 
+// ---------------- ELEMENTS ----------------
 const totalBalEl = document.getElementById("totalBal");
 const refreshBtn = document.getElementById("refreshBtn");
 const clearBtn = document.getElementById("clearBtn");
@@ -262,9 +280,7 @@ const hlSizeEl = document.getElementById("hlSize");
 const propEvalEl = document.getElementById("propEval");
 const propPassedEl = document.getElementById("propPassed");
 
-// -----------------------------------------
-// HELPERS
-// -----------------------------------------
+// ---------------- HELPERS ----------------
 function apiPost(body){
   return fetch("https://api.hyperliquid.xyz/info",{
     method:"POST",
@@ -273,51 +289,43 @@ function apiPost(body){
   }).then(r=>r.json());
 }
 
-function toNum(v){
-  return Number(String(v).replace(/,/g,""));
-}
+function toNum(v){ return Number(String(v).replace(/,/g,"")); }
 
 function formatPrice(v){
   if(!selectedSymbol) return v;
-  const meta = assetMeta[selectedSymbol];
-  const dec = meta.pxDecimals;
+  const dec = assetMeta[selectedSymbol].pxDecimals;
   const n = toNum(v);
   if(!isFinite(n)) return "";
   return n.toFixed(dec);
 }
 
 function formatSize(v){
-  const meta = assetMeta[selectedSymbol];
-  const dec = meta.szDecimals;
+  const dec = assetMeta[selectedSymbol].szDecimals;
   return Number(v).toFixed(dec);
 }
 
-function allChecked(){
-  return ruleBoxes.every(cb=>cb.checked);
-}
+function allChecked(){ return ruleBoxes.every(cb=>cb.checked); }
 
-// -----------------------------------------
-// META USING ONLY type:"meta"
-// -----------------------------------------
+// ---------------- META LOAD ----------------
 async function loadMeta(){
-  const resp = await apiPost({type:"meta"});
-  console.log("META:", resp);
 
-  const uni = resp.universe || [];
+  const respPerp = await apiPost({type:"meta"});
+  const respXyz  = await apiPost({type:"meta", dex:"xyz"});
+
+  const u1 = respPerp.universe || [];
+  const u2 = respXyz.universe || [];
+
+  const combined = [...u1, ...u2];
+
   assets = [];
   assetMeta = {};
 
-  for(const a of uni){
+  for(const a of combined){
     const sym = a.name;
     const sz = Number(a.szDecimals||0);
+    const px = Math.max(0, 5 - sz);
 
-    const px = Math.max(0, 5 - sz); // PURE PERP RULE
-
-    assetMeta[sym] = {
-      pxDecimals: px,
-      szDecimals: sz
-    };
-
+    assetMeta[sym] = { pxDecimals: px, szDecimals: sz };
     assets.push(sym);
   }
 
@@ -325,12 +333,11 @@ async function loadMeta(){
   renderAssetList(assets);
 }
 
+// ---------------- ASSET DROPDOWN ----------------
 function renderAssetList(list){
   assetListEl.innerHTML="";
-  if(!list.length){
-    assetListEl.classList.add("hidden");
-    return;
-  }
+  if(!list.length){ assetListEl.classList.add("hidden"); return; }
+
   for(const s of list){
     const d=document.createElement("div");
     d.className="opt";
@@ -357,37 +364,37 @@ function selectAsset(sym){
   compute();
 }
 
-// -----------------------------------------
-// BALANCE
-// -----------------------------------------
+assetSearch.addEventListener("input", ()=>{
+  const q = assetSearch.value.toLowerCase();
+  renderAssetList(assets.filter(a=>a.toLowerCase().includes(q)));
+});
+
+document.addEventListener("click", e=>{
+  if(!e.target.closest(".sel-wrap")) assetListEl.classList.add("hidden");
+});
+
+// ---------------- BALANCE REFRESH ONLY ----------------
 async function fetchBalance(){
-  try{
-    refreshBtn.disabled = true;
-    refreshBtn.textContent="Loading...";
 
-    const [crypto, stock] = await Promise.allSettled([
-      apiPost({type:"clearinghouseState", user:USER}),
-      apiPost({type:"clearinghouseState", user:USER, dex:"xyz"})
-    ]);
+  const [crypto, stock] = await Promise.allSettled([
+    apiPost({type:"clearinghouseState", user:USER}),
+    apiPost({type:"clearinghouseState", user:USER, dex:"xyz"})
+  ]);
 
-    const b1 = parseCH(crypto.status==="fulfilled"?crypto.value:null);
-    const b2 = parseCH(stock.status==="fulfilled"?stock.value:null);
+  const b1 = parseCH(crypto.status==="fulfilled"?crypto.value:null);
+  const b2 = parseCH(stock.status==="fulfilled"?stock.value:null);
 
-    window.__balance = b1 + b2;
-    totalBalEl.textContent = window.__balance.toFixed(2);
+  window.__balance = b1 + b2;
+  totalBalEl.textContent = window.__balance.toFixed(2);
 
-    compute();
-  } finally {
-    refreshBtn.disabled=false;
-    refreshBtn.textContent="Refresh Balance";
-  }
+  compute();
 }
 
 function parseCH(resp){
   if(!resp) return 0;
   const ms = resp.marginSummary || {};
-  let eq = Number(ms.accountValue||0) || 0;
-  let upnl = 0;
+  let eq = Number(ms.accountValue||0)||0;
+  let upnl=0;
   const aps = resp.assetPositions||[];
   for(const ap of aps){
     upnl += Number(ap.position?.unrealizedPnl||0)||0;
@@ -395,28 +402,30 @@ function parseCH(resp){
   return eq - upnl;
 }
 
-// -----------------------------------------
-// COMPUTE POSITION SIZE
-// -----------------------------------------
+// Refresh ONLY balance
+refreshBtn.addEventListener("click", async ()=>{
+  refreshBtn.disabled = true;
+  refreshBtn.textContent = "Refreshing...";
+  await fetchBalance();
+  refreshBtn.disabled = false;
+  refreshBtn.textContent = "Refresh";
+});
+
+// ---------------- COMPUTE POSITION SIZE ----------------
 function compute(){
   posError.textContent="";
   posBlock.classList.add("hidden");
   posLocked.classList.remove("hidden");
 
-  if(!selectedSymbol){
-    posError.textContent="Select asset first.";
-    return;
-  }
+  if(!selectedSymbol){ posError.textContent="Select asset first."; return; }
 
   const ent = toNum(entryEl.value);
   const stp = toNum(stopEl.value);
-  if(!isFinite(ent) || !isFinite(stp)) return;
+
+  if(!isFinite(ent)||!isFinite(stp)) return;
 
   const dist = Math.abs(ent - stp);
-  if(dist===0){
-    posError.textContent="Entry and stop cannot be equal.";
-    return;
-  }
+  if(dist===0){ posError.textContent="Entry and stop cannot be equal."; return; }
 
   if(!allChecked()) return;
 
@@ -435,18 +444,7 @@ function compute(){
   posLocked.classList.add("hidden");
 }
 
-// -----------------------------------------
-// EVENTS
-// -----------------------------------------
-assetSearch.addEventListener("input", ()=>{
-  const q = assetSearch.value.toLowerCase();
-  const f = assets.filter(a=>a.toLowerCase().includes(q));
-  renderAssetList(f);
-});
-document.addEventListener("click", e=>{
-  if(!e.target.closest(".sel-wrap")) assetListEl.classList.add("hidden");
-});
-
+// ---------------- INPUT EVENTS ----------------
 entryEl.addEventListener("blur", ()=>{
   entryEl.value = formatPrice(entryEl.value);
   compute();
@@ -455,12 +453,15 @@ stopEl.addEventListener("blur", ()=>{
   stopEl.value = formatPrice(stopEl.value);
   compute();
 });
+
 entryEl.addEventListener("input", compute);
 stopEl.addEventListener("input", compute);
 ruleBoxes.forEach(cb=>cb.addEventListener("change", compute));
 
+// CLEAR
 clearBtn.addEventListener("click", ()=>{
-  entryEl.value=""; stopEl.value="";
+  entryEl.value="";
+  stopEl.value="";
   assetSearch.value="";
   selectedSymbol=null;
   selectedAssetEl.textContent="—";
@@ -472,11 +473,9 @@ clearBtn.addEventListener("click", ()=>{
   posError.textContent="";
 });
 
-// -----------------------------------------
-// INIT
-// -----------------------------------------
-await loadMeta();
-await fetchBalance();
+// ---------------- INIT ----------------
+await loadMeta();    // load assets once
+await fetchBalance(); // load balance initially
 
 })();
 </script>
