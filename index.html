@@ -185,6 +185,7 @@ input[type="text"]{
         <div class="title">Rules</div>
 
         <div class="rules">
+          <label class="rule"><input type="checkbox" class="rule-box"> Daily notion journal completed</label>
           <label class="rule"><input type="checkbox" class="rule-box"> Inside 4H area</label>
           <label class="rule"><input type="checkbox" class="rule-box"> Clear 15m MSB</label>
           <label class="rule"><input type="checkbox" class="rule-box"> No open trade with invalid stoploss</label>
@@ -209,12 +210,12 @@ input[type="text"]{
           </div>
 
           <div class="prop-box">
-            <div class="small-muted">25K Eval</div>
+            <div class="small-muted">50K Eval</div>
             <div class="pos-value" id="propEval">—</div>
           </div>
 
           <div class="prop-box">
-            <div class="small-muted">25K Passed</div>
+            <div class="small-muted">50K Passed</div>
             <div class="pos-value" id="propPassed">—</div>
           </div>
         </div>
@@ -248,8 +249,8 @@ input[type="text"]{
 const USER = "0xf692cd649ea29a6c2dedc8af5487af97c0dfe102";
 
 const RISK_PCT = 0.5/100;
-const PROP_EVAL_RISK = 250;
-const PROP_PASSED_RISK = 125;
+const PROP_EVAL_RISK = 500;
+const PROP_PASSED_RISK = 250;
 
 let assets = [];
 let assetMeta = {};
@@ -482,3 +483,4 @@ await fetchBalance(); // load balance initially
 
 </body>
 </html>
+
