@@ -186,13 +186,12 @@ input[type="text"]{
 
         <div class="rules">
           <label class="rule"><input type="checkbox" class="rule-box"> Daily notion journal completed</label>
+          <label class="rule"><input type="checkbox" class="rule-box"> Trade is in sync with BTC journal trade</label>
           <label class="rule"><input type="checkbox" class="rule-box"> Inside 4H area</label>
           <label class="rule"><input type="checkbox" class="rule-box"> Clear 15m MSB</label>
-          <label class="rule"><input type="checkbox" class="rule-box"> No open trade with invalid stoploss</label>
-          <label class="rule"><input type="checkbox" class="rule-box"> 30+ minutes since last stopout</label>
-          <label class="rule"><input type="checkbox" class="rule-box"> Not trying to make it back</label>
-          <label class="rule"><input type="checkbox" class="rule-box"> All previous stopped trades journaled</label>
-          <label class="rule"><input type="checkbox" class="rule-box"> Journal filled BEFORE trade</label>
+          <label class="rule"><input type="checkbox" class="rule-box"> No ongoing trade with open risk</label>
+          <label class="rule"><input type="checkbox" class="rule-box"> No emotional attachment to last stopped out trade</label>
+          <label class="rule"><input type="checkbox" class="rule-box"> Previous stopped out trade reviewed</label>
         </div>
       </div>
 
@@ -211,12 +210,12 @@ input[type="text"]{
           </div>
 
           <div class="prop-box">
-            <div class="small-muted">50K Eval</div>
+            <div class="small-muted">10K Eval</div>
             <div class="pos-value" id="propEval">—</div>
           </div>
 
           <div class="prop-box">
-            <div class="small-muted">50K Passed</div>
+            <div class="small-muted">Passed</div>
             <div class="pos-value" id="propPassed">—</div>
           </div>
         </div>
@@ -250,7 +249,7 @@ input[type="text"]{
 const USER = "0xf692cd649ea29a6c2dedc8af5487af97c0dfe102";
 
 const RISK_PCT = 0.5/100;
-const PROP_EVAL_RISK = 500;
+const PROP_EVAL_RISK = 100;
 const PROP_PASSED_RISK = 250;
 
 let assets = [];
@@ -436,7 +435,7 @@ function compute(){
 
   const hlSize = risk / dist;
   const evalSz = PROP_EVAL_RISK / dist;
-  const passSz = PROP_PASSED_RISK / dist;
+  const passSz = hlSize * 3;
 
   hlSizeEl.textContent = formatSize(hlSize);
   propEvalEl.textContent = formatSize(evalSz);
