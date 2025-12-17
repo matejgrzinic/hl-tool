@@ -323,8 +323,8 @@ async function loadMeta(){
 
   for(const a of combined){
     const sym = a.name;
-    const sz = Number(a.szDecimals||0);
-    const px = Math.max(0, 5 - sz);
+    const sz = Number(a.szDecimals);
+    const px = sz <= 1 ? 6-sz : Math.max(0, 5 - sz);
 
     assetMeta[sym] = { pxDecimals: px, szDecimals: sz };
     assets.push(sym);
