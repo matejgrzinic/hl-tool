@@ -249,7 +249,7 @@ input[type="text"]{
 const USER = "0xf692cd649ea29a6c2dedc8af5487af97c0dfe102";
 
 const RISK_PCT = 0.5/100;
-const PROP_EVAL_RISK = 100;
+const PROP_EVAL_RISK = 65;
 const PROP_PASSED_RISK = 250;
 
 let assets = [];
@@ -434,7 +434,7 @@ function compute(){
   const risk = bal * RISK_PCT;
 
   const hlSize = risk / dist;
-  const evalSz = 10000 / 0.0065; // PROP_EVAL_RISK / dist;
+  const evalSz = PROP_EVAL_RISK / dist;
   const passSz = hlSize * 3;
 
   hlSizeEl.textContent = formatSize(hlSize);
@@ -483,6 +483,7 @@ await fetchBalance(); // load balance initially
 
 </body>
 </html>
+
 
 
 
