@@ -434,7 +434,7 @@ function compute(){
   const risk = bal * RISK_PCT;
 
   const hlSize = risk / dist;
-  const evalSz = PROP_EVAL_RISK / dist;
+  const evalSz = 10000 / 0.0065; // PROP_EVAL_RISK / dist;
   const passSz = hlSize * 3;
 
   hlSizeEl.textContent = formatSize(hlSize);
@@ -483,5 +483,6 @@ await fetchBalance(); // load balance initially
 
 </body>
 </html>
+
 
 
